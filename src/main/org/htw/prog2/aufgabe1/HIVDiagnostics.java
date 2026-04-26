@@ -14,7 +14,35 @@ public class HIVDiagnostics {
      */
 
     public static CommandLine parseOptions(String[] args) {
-        return null;
+        Options options = new Options();
+
+        options.addOption("m", true, "");
+        options.addOption("d", true, "");
+        options.addOption("r", true, "");
+        options.addOption("p", true, "");
+
+        CommandLineParser parser = new DefaultParser();
+        HelpFormatter formatter = new HelpFormatter();
+
+        try {
+            CommandLine cmd = parser.parse(options, args);
+
+            String m = cmd.getOptionValue("m");
+            String d = cmd.getOptionValue("d");
+            String r = cmd.getOptionValue("r");
+            String p = cmd.getOptionValue("p");
+
+            if (m == null || d == null || r == null || p == null) {
+                formatter.printHelp("HIVDiagnostics", options);
+                return null;
+            }
+
+            return cmd;
+
+        } catch (ParseException e) {
+            formatter.printHelp("HIVDiagnostics", options);
+            return null;
+        }
     }
 
     public static void main(String[] args) {
